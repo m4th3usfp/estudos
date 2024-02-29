@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+
+</head>
+<body style="background-color: antiquewhite;">
+        <!--barra de navegação-->
+        <nav class="navbar navbar-dark bg-dark navbar-expanded-lg">
+            <!--container-->
+            <div class="container">
+                <!--logo-->
+                <a class="navbar-brand me-5" href="#">Meu site</a>
+    
+                <!--menu sanduiche (para smartphone)-->
+                <button class="navbar-toggler" data-bs-toggle="collapse"
+                    data-bs-target="#menu-links">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <!--menu de links-->
+                <div class="collapse navbar-collapse" id="menu-links">
+    
+                    <!--logo elinks alinhados a esquerda-->
+                    <ul class="navbar-nav me-auto">
+    
+                        <!--link home-->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Home</a>
+                        </li>
+    
+                        <!--link desabilitado-->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link disabled">Contato</a>
+                        </li>
+    
+                        <!--menu suspenso-->
+                        <li class="nav-item dropdown">
+                            
+                            <!--botao do menu suspenso-->
+                            <a href="#" class="nav-link dropdown-toggle" role="button" 
+                                data-bs-toggle="dropdown">Ajuda</a>
+    
+                                <!--links ocultos-->
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" class="dropdown-item">Sobre o sistema</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="dropdown-item">Especialistas</a>
+                                    </li>
+                                </ul>
+    
+    
+    
+                        </li> <!--nav-item dropdown-->
+                    </ul> <!--navbar-nav-->
+    
+                    <!--alinhado a direita-->
+                    <div class="d-flex">
+                        <form class="input-group">
+                            <input type="text" class="form-control" placeholder="buscar">
+                            <button class="btn btn-success">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                        
+    
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!--/////////////////////////////////////////////////////////////////////////////////////////-->
+    
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle"
+                id="menu-suspenso-oculto"
+                data-bs-toggle="dropdown">
+            menu suspenso
+        </button>
+
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Item 1</a></li>
+            <li><a class="dropdown-item" href="#">Item 2</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Item 3</a></li>
+        </ul>
+    </div>
+
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-primary">Esquerda</button>
+        <button type="button" class="btn btn-warning">Meio</button>
+        <button type="button" class="btn btn-success">Direita</button>
+    </div>
+    <div class="btn-toolbar">
+        <div class="btn-group btn-group-lg me-2" role="group">
+            <button type="button" class="btn btn-primary">1</button>
+            <button type="button" class="btn btn-dark">2</button>
+            <button type="button" class="btn btn-success">3</button>
+        </div>
+        
+        <div class="btn-group me-2" role="group">
+            <button type="button" class="btn btn-info">4</button>
+            <button type="button" class="btn btn-secondary">5</button>
+            <button type="button" class="btn btn-primary">6</button>
+        </div>
+        
+        <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-dark">7</button>
+            <button type="button" class="btn btn-success">8</button>
+            <button type="button" class="btn btn-info">9</button> 
+        </div>
+    </div>
+
+       <div class="toast fade show" role="alert"
+            aria-live="assertive" aria-atomic="true">
+
+    <!-- Cabeçalho -->
+        <div class="toast-header">
+            <label class="badge bg-warning me-1">!</label>
+            <strong class="me-auto">Aviso</strong>
+            <small class="text-muted">2 minutos atrás</small>
+
+    <!-- Botão fechar -->
+        <button type="button" class="btn-close"
+            data-bs-dismiss="toast" aria-
+            label="Close"></button>
+        </div>
+
+
+
+
+    <!-- Corpo da caixa de notificações -->
+        <div class="toast-body">
+            Isso é uma caixa de notificações!
+        </div>
+    </div>
+
+    <!--card vertical-->
+    <div class="card col-4">
+        <img src="cavaleiro.jpg.webp" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title">cavaleiro templario</h5>
+            <p class="card-text">
+                o cara mata o povo com peste burca, sai da frente mano.
+            </p>
+            <a href="#" class="btn btn-primary">saiba mais</a>
+        </div>
+    </div>    
+    <!--card horizontal-->
+    <div class="card mb-3">
+        <div class="row g-0">
+
+            <div class="col-4">
+                <img src="prototype.jpg" class="img-fluid rounded-start">
+            </div>
+            <div class="col-8">
+                <div class="card-body">
+                    <h5 class="card-title">Alex Mercer</h5>
+                    <p class="card-text">
+                        esse cara ai e de um jogo muito doido e vc tem varios poderes e e quase invensivel
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            atualizado a tres minutos atras
+                        </small>
+                    </p>
+                    <a href="#" class="btn btn-primary">saiba mais</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress">
+        <div
+            class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+            role="progressbar"
+            style="width: 75%"
+            aria-valuenow="75"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            >
+                75%
+
+        </div>
+    </div>
+
+    <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+    
+        
+    
+  <!-- carrossel de imagens -->
+<div id="carrossel-de-imagens" class="carousel slide w-50 mx-auto" data-bs-ride="carousel">
+
+    <!-- traços marcadores -->
+    <div class="carousel-indicators">
+
+        <!-- primeiro marcador (ativo por padrão) -->
+        <button type="button" data-bs-target="#carrossel-de-imagens" data-bs-slide-to="0" class="active" aria-current="step" aria-label="slide-1"></button>
+
+        <!-- segundo marcador: link imagem 2 -->
+        <button type="button" data-bs-target="#carrossel-de-imagens" data-bs-slide-to="1" aria-label="slide 2"></button>
+
+        <!-- terceiro marcador: link imagem 3 -->
+        <button type="button" data-bs-target="#carrossel-de-imagens" data-bs-slide-to="2" aria-label="slide 3"></button>
+    </div>
+
+    <!-- bloco de imagens -->
+    <div class="carousel-inner">
+
+        <!-- imagem 1 + legenda -->
+        <div class="carousel-item active">
+
+            <!-- imagem 1 -->
+            <img src="cavaleiro.jpg.webp" alt="templario" class="d-block w-100 rounded my-auto">
+
+            <!-- legenda -->
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Cavaleiro</h5>
+                <p>Exemplo de imagem</p>
+            </div>
+        </div>
+
+        <!-- imagem 2 + legenda -->
+        <div class="carousel-item">
+
+            <!-- imagem 2 -->
+            <img src="prototype.jpg" alt="alex-mercer" class="d-block w-100 rounded h-25 my-auto">
+
+            <!-- legenda -->
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Alex Mercer</h5>
+                <p>Exemplo de imagem</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- botões de navegação -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-de-imagens" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#carrossel-de-imagens" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+    </button>
+</div>
+
+
+<!--caixa modal-->
+
+<!--botao de ativação-->
+<button
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#meu-modal"
+    >
+        botao de ativação
+    </button>
+        
+<!--div oculta do modal, inclui fundo semitransparente-->
+<div class="modal fade" id="meu-modal"
+    tabindex="-1">
+    
+    <!--caixa de dialogo-->
+    <div class="modal-dialog">
+
+        <!--conteudo do modal-->
+        <div class="modal-content">
+
+            <!--cabeçalho do modal-->
+            <div class="modal-header">
+                <h5 class="modal-title" id="titulo-modal">Titulo do modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="close"></button>
+                </div>
+            
+            <!--corpo do modal-->
+            <div class="modal-body">eae meu, eu sou um modal!</div>
+
+            <!--rodape do modal-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-bs-dismiss="modal">fechar</button>
+                
+                <button type="button" class="btn btn-primary">salvar</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!--popovers & tooltips-->
+<button
+    class="btn btn-lg btn-info"
+    data-bs-toggle="popover"
+    title="saiba mais"
+    data-bs-placement="bottom"
+    data-bs-content="um popover e um botao que quando clicado, exibe uma caixa de informações complementares ao lado
+    podemos alterar a posição que a caixa é exibida mudando o atributo 'data-bs-placement', que pode receber 'top', 'left', 'bottom' ou 'right'"
+    >Saiba mais</button>
+
+    <!--ativando os popovers-->
+    <script>
+
+        // selecione todos os popovers
+        let popovers = document.querySelectorAll('[data-bs-toggle="popover"]');
+
+        //para cada popover
+        for(let i of popovers) {
+            new bootstrap.Popover(i); // ative-o
+        }
+    </script>
+
+    <!--botao de ativação-->
+    <button
+        class="btn btn-danger"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        title="Tooltip sao componentes mais simples.
+        basta passar o mouse sobre eles e o texto do atributo 'title' é exibido."
+        >
+        Saiba mais
+    </button>
+
+    <!--ativando os tooltips-->
+    <script>
+        //seleciona todos os tooltips
+        let tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+
+        //para cada tooltip
+        for(let i of tooltips) {
+            new bootstrap.Tooltip(i); //ative-o
+        }
+    </script>
+
+    <!--menu de grupo de lsitas-->
+    <div class="list-group">
+
+        <!--link ativo-->
+        <a href="#" class="list-group-item list-group-item-action active">
+            Link atual
+        </a>
+
+        <!--link-->
+        <a href="#" class="list-group-item list-group-item-action">
+            segundo link
+        </a>
+
+        <!--terceiro link-->
+        <a href="#" class="list-group-item list-group-item-action disabled">
+            Terceiro link
+        </a>
+
+        <!--quarto link-->
+        <a href="#" class="list-group-item list-group-item-action">
+            Quarto link
+        </a>
+    </div>
+
+    <!--offcanvas: menu lateral-->
+    <a href="#menu-lateral" class="btn btn-primary" data-bs-toggle="offcanvas">
+        Abrir menu lateral
+    </a>
+
+    <!--menu lateral-->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="menu-lateral">
+
+        <!--cabeçalho-->
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">Menu lateral</h5>
+            <button type="button" class="btn-close text-reset"
+                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <!--corpo-->
+        <div class="offcanvas-body">
+            Este e o conteudo do menu lateral
+            <h3 class="text-muted text-bg-info">Se voce leu certamente da o cu</h3>
+        </div>
+    </div>
+
+    <!--menu de rolagem (scrollspy)-->
+    <!--campo de rolagem-->
+
+    <div class="row">
+        
+        <!--coluna a esquerda-->
+        <div class="col-4">
+            <nav id="menu-rolagem" 
+            class="navbar navbar-light bg-light flex-column align-items-strech p-3">
+                
+            <!--titulo-->
+            <a href="#" class="navbar-brand">Menu de rolagem</a>
+
+            <!--items do menu-->
+            <nav class="nav nav-pills flex-column">
+                    <a href="#item-1" class="nav-link active">Item 1</a>
+                <nav class="nav nav-pills flex-column">
+                    <a href="#item-1-1" class="nav-link ms-3 my-1">Item 1-1</a>
+                </nav>
+                <a href="#item-2" class="nav-link">Item 2</a>
+                <a href="#item-3" class="nav-link">Item 3</a>
+                <nav class="nav nav-pills flex-column">
+                    <a href="#item-3-1" class="nav-link ms-3 my-1">Item 3-1</a>
+                </nav>
+            </nav>
+        </nav>
+    </div>
+    <!--coluna a direita-->
+    <div class="col-8">
+        <div data-bs-spy="scroll" data-bs-target="#menu-rolagem"
+            data-bs-offset="0"
+            style="position: relative; height: 350px; overflow: auto;">
+
+            <h4 id="item-1">Item 1</h4>
+            <p>o texto vai aqui pelo jeito</p>
+            <h5 id="item-1-1">Item 1-1</h5>
+            <p>mais texto aqui</p>
+
+            <h4 id="item-2">Item 2</h4>
+            <p>Mais textos</p>
+
+            <h4 id="item-3">Item 3</h4>
+            <p>mais textos</p>
+
+            <h5 id="item-3-1">Item 3-1</h5>
+            <p>mais textos</p>
+
+            <h5 id="item-3-2">Item 3-2</h5>
+            <p>mais textos ainda</p>
+
+        </div>
+    </div>        
+    </div>
+
+    <!--breadcumb-->
+    <!--menus de localização-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Biblioteca</a></li>
+            <li class="breadcrumb-item-active">Livros</li>
+        </ol>
+    </nav>
+
+    <!--paginação-->
+    <nav>
+        <ul class="pagination">
+            <li class="page-item">
+                <a href="#" class="page-link">Anterior</a>
+            </li>
+
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+
+            <li class="page-item">
+                <a href="#" class="page-link">Proximo</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!--icone de pagina inicial (casa)-->
+    <i class="bi bi-house-fill "></i>
+
+    <!--icone de grafico-->
+    <i class="bi-bi-bar-chart"></i>
+
+    <!--icone de pessoa-->
+    <i class="bi bi-person-circle"></i>
+
+    <!--icone de download-->
+    <i class="bi bi-arrow-down-circle-fill"></i>
+
+    <!--icone de ajuda-->
+    <i class="bi bi-question-circle-fill"></i>
+
+    <i class="bi bi-download"></i>
+</body>
+</html>
+
+
+
+
+

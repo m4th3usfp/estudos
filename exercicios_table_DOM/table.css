@@ -1,0 +1,36 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: darkgray;
+}
+
+p {
+    font-size: 20px;
+}
+
+#number {
+    width: 50px;
+    border-radius: 8px;
+    height: 22px;
+    background-color: antiquewhite;
+    border-color: aquamarine;
+    font-size: 16px;
+}
+button {
+    width: auto;
+    border-radius: 5px;
+    height: 27px;
+    background-color: antiquewhite;
+    border-color: aquamarine;
+    font-size: 16px;
+}
