@@ -1,57 +1,108 @@
-
 const pessoasSalvas = [{}];
 
-document.addEventListener('blur', function () {
-    const URL = document.getElementById('URL').value;
-
-    console.log('e isso', URL)
-    if (URL.length > 0) {
-
-        fetch(URL + '/pessoa', {
-            method: 'GET',
-
-        })
-
-            .then(response => {
-
-                return response.json()
+document.addEventListener('DOMContentLoaded', function () {
+    let url = document.querySelector('#URL')
 
 
-            })
-            .then(response => {
-                console.log(response)
+    let urlUsada = '';
 
-                for (pessoa of response) {
-                    const tbody = document.querySelector('#tbody');
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                    <td>${pessoa.nome}</td>
-                    <td>${pessoa.email}</td>
-                    <td>${pessoa.value}</td>
-                    <td>
-                        <button id="editar_pessoa" class="btn btn-secondary" type="button">Editar</button>
-                        <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" onclick="cancelarLinha(this)">Cancelar</button>
-                    </td>
-                    
-                    `;
+    url.addEventListener('blur', function () {
+        const URL = url.value;
+        if (urlUsada === '') {
+            urlUsada = URL
+            console.log('e isso', URL)
+            if (URL.length > 0) {
 
-                    tbody.appendChild(newRow);
+                fetch(URL + '/pessoa', {
+                    method: 'GET',
 
-                }
+                })
+
+                    .then(response => {
+
+                        return response.json()
 
 
+                    })
+                    .then(response => {
+                        console.log('olha aki =>', response)
 
-            })
+                        for (pessoa of response) {
+
+                            if (pessoa.tipo === '1') {
+                                pessoa.tipo = 'Cliente';
+                            } else if (pessoa.tipo === '2') {
+                                pessoa.tipo = 'Fornecedor';
+                            } else if (pessoa.tipo === '3') {
+                                pessoa.tipo = 'Empregado';
+                            } else {
+                                pessoa.tipo = 'Tipo desconhecido';
+                            }
+
+                            const tbody = document.querySelector('#tbody');
+
+                            if (tbody.querySelectorAll('tr').length === 0) {
+                                const headerRow = document.createElement('tr');
+                                headerRow.innerHTML = `
+                                    <td>Nome</td>
+                                    <td>Email</td>
+                                    <td>Tipo</td>
+                                    <td></td>
+                                    </tr>
+                                    `;
+                                tbody.appendChild(headerRow);
 
 
-    }
+                            }
 
-})
+                            if (tbody.querySelectorAll('tr').length >= 1) {
+                                document.getElementById('h5').style.display = 'none';
+                            }
+
+
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                                <td>${pessoa.nome}</td>
+                                <td>${pessoa.email}</td>
+                                <td>${pessoa.tipo}</td>
+                                <td>
+                                    <button id="editar_pessoa" class="btn btn-secondary" type="button">Editar</button>
+                                    <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" onclick="cancelarLinha(this)">Cancelar</button>
+                                </td>
+                                
+                                `;
+
+                            tbody.appendChild(newRow);
+
+
+
+                        }
+
+
+
+                    })
+
+
+            }
+        }
 
 
 
 
 
+
+
+    })
+
+
+
+
+
+
+
+
+
+});
 
 
 function inserirDados(form) {
@@ -59,7 +110,7 @@ function inserirDados(form) {
 
     const nome = form.querySelector('input[name="nome"]').value;
     const email = form.querySelector('input[name="email"]').value;
-    const tipo = form.querySelector('input[name="tipo"]:checked').value;
+    let tipo = form.querySelector('input[name="tipo"]:checked').value;
     const URL = document.getElementById('URL').value;
 
 
@@ -67,16 +118,8 @@ function inserirDados(form) {
         return;
     }
 
-    let value;
-    if (tipo === '1') {
-        value = 'Cliente';
-    } else if (tipo === '2') {
-        value = 'Fornecedor';
-    } else if (tipo === '3') {
-        value = 'Empregado';
-    } else {
-        value = 'Tipo desconhecido';
-    }
+
+
 
     const novaPessoa = { nome, email, tipo, URL };
 
@@ -97,25 +140,37 @@ function inserirDados(form) {
             console.log(response)
             return response.json();
         })
-        .then((data) => {
+        .then(() => {
             pessoasSalvas.push(novaPessoa);
 
 
-            const tbody = document.querySelector('#tbody');
+            const tbody = document.querySelectorAll('#tbody')[0];
 
             // Criação da linha de cabeçalho
             if (tbody.querySelectorAll('tr').length === 0) {
                 const headerRow = document.createElement('tr');
                 headerRow.innerHTML = `
-        <td>Nome</td>
-        <td>Email</td>
-        <td>Tipo</td>
-        <td></td>
-        </tr>
-        `;
-                tbody.appendChild(headerRow);
+                <td>Nome</td>
+                <td>Email</td>
+                <td>Tipo</td>
+                <td></td>
+                </tr>
+                `;
+                tbody.appendChild(headerRow)
 
 
+
+
+
+            }
+            if (tipo === '1') {
+                tipo = 'Cliente';
+            } else if (tipo === '2') {
+                tipo = 'Fornecedor';
+            } else if (tipo === '3') {
+                tipo = 'Empregado';
+            } else {
+                tipo = 'Tipo desconhecido';
             }
 
 
@@ -123,7 +178,7 @@ function inserirDados(form) {
             newRow.innerHTML = `
               <td>${nome}</td>
               <td>${email}</td>
-              <td>${value}</td>
+              <td>${tipo}</td>
               <td>
                   <button id="editar_pessoa" class="btn btn-secondary" type="button">Editar</button>
                   <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" onclick="cancelarLinha(this)">Cancelar</button>
@@ -133,59 +188,18 @@ function inserirDados(form) {
 
             tbody.appendChild(newRow);
 
-
-
-
-            
-
-
-
-
-
-
-
-            // Criação da nova linha com os dados da pessoa
-            // const url = 'https://crudcrud.com/api/bedb493ae725448b88476f29ecdef687';
-            // fetch(url, {
-            //     method: 'GET',
-
-            // })
-
-            //     .then((response) => {
-
-            //         return response.json();
-            //     })
-
-
-            //     .then((data) => {
-            //         for (pessoa of data) {
-            //             
-
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error)
-            //     });
-
-            if (tbody.querySelectorAll('tr').length > 1) {
+            if (tbody.querySelectorAll('tr').length >= 1) {
                 document.getElementById('h5').style.display = 'none';
                 alert('Pessoa adicionada');
+                tbody.style.display = '';
+            } else {
+
+                document.getElementById('h5').style.display = 'block';
+
             }
 
-
-
-
-
-
-
         });
-
-
-
-
 }
-
-
 
 
 function cancelarLinha(botao) {
@@ -202,14 +216,41 @@ function cancelarLinha(botao) {
     if (tbody.querySelectorAll('tr').length > 1) {
         alert('Tem certeza que deseja remover a pessoa ?');
 
-        newRow.remove()
+        linha.remove()
     } else if (tbody.querySelectorAll('tr').length === 1) {
 
         alert('Tem certeza que deseja remover a pessoa ?');
 
-        tbody.remove();
+        linha.remove();
+        tbody.style.display = 'none';
+        document.querySelector('h5').style.display = 'block'
+    } if (tbody.querySelector('tr').length > 1) {
+        tbody.style.display = '';
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
