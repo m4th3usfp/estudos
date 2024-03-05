@@ -46,8 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             const tbody = document.querySelector('#tbody');
                             let pessoa_ID = pessoa._id;
+
                             idsalvo.push(pessoa_ID)
-                            console.log(pessoa_ID)
+
+                            console.log('id do GET => ',pessoa_ID)
 
                             if (tbody.querySelectorAll('tr').length === 0) {
                                 const headerRow = document.createElement('tr');
@@ -154,8 +156,11 @@ function inserirDados(form) {
         })
         .then((response) => {
             let pessoa_ID = response._id;
-            console.log(pessoa_ID)
+
+            console.log('id da pessoa => ',pessoa_ID)
+
             pessoasSalvas.push(novaPessoa);
+
             idsalvo.push(pessoa_ID);
 
 
@@ -223,51 +228,43 @@ function inserirDados(form) {
 
 
 function cancelarLinha(botao) {
-    // Obtém o elemento <tr> pai do botão de cancelar
     const linha = botao.closest('tr');
-
-    // Obtém o elemento <tbody> pai da linha
     const tbody = linha.parentNode;
-
-    // Remove a linha
-    linha.remove();
-
-    // Se o número de linhas no tbody for igual a 1, remove o tbody
-    if (tbody.querySelectorAll('tr').length > 1) {
-        alert('Tem certeza que deseja remover a pessoa ?');
-
-        linha.remove()
-       
-    } else if (tbody.querySelectorAll('tr').length === 1) {
-
-        alert('Tem certeza que deseja remover a pessoa ?');
-
-        linha.remove();
-        tbody.style.display = 'none';
-        document.querySelector('h5').style.display = 'block'
-    }
-    
-    
+    let pessoa_ID = botao.value;
     const url = document.querySelector('#URL').value;
-
-    let pessoa_ID = document.querySelector('#cancelar_linha').value;
-    console.log('null || undefined =>',pessoa_ID)
-
 
     fetch(`${url}/pessoa/${pessoa_ID}`, {
         method: "DELETE",
-        //mode: 'no-cors'
-        
     })
-    
-        .then(response => {
-            console.log(response.status);
-        })
+    .then(response => {
+        console.log(response.status);
+
+        alert('Tem certeza que quer deletar essa pessoa ? ')
+
+        linha.remove();
+
+        if (tbody.querySelectorAll('tr').length === 1) {
+            
+
+            tbody.style.display = 'none';
+
+            document.querySelector('h5').style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.log('Erro ao tentar excluir a pessoa', error);
+    });
+}
+
         
-        .catch(error => {
-            console.log('Erro ao tentar excluir a pessoa', error);
-        });
-    }
+
+        
+    
+    
+
+    
+  
+    
     
 
 
