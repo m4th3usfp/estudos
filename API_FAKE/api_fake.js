@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             const tbody = document.querySelector('#tbody');
                             let pessoa_ID = pessoa._id;
+                            let editar_ID = pessoa_ID;
 
                             idsalvo.push(pessoa_ID)
 
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 <td>${pessoa.email}</td>
                                 <td>${pessoa.tipo}</td>
                                 <td>
-                                    <button id="editar_pessoa" class="btn btn-secondary" type="button">Editar</button>
+                                    <button id="editar_pessoa" class="btn btn-secondary" type="button" data-bs-toggle="modal" value=${editar_ID} onclick="editarLinha(this)">Editar</button>
                                     <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" value=${pessoa_ID} onclick="cancelarLinha(this)">Cancelar</button>
                                 </td>
                                 
@@ -126,6 +127,7 @@ function inserirDados(form) {
     const URL = document.getElementById('URL').value;
     
     
+    
 
 
     if (event.submitter.id === 'cancelar_modal') {
@@ -156,6 +158,7 @@ function inserirDados(form) {
         })
         .then((response) => {
             let pessoa_ID = response._id;
+            let editar_ID = pessoa_ID;
 
             console.log('id da pessoa => ',pessoa_ID)
 
@@ -200,7 +203,7 @@ function inserirDados(form) {
               <td>${email}</td>
               <td>${tipo}</td>
               <td>
-                  <button id="editar_pessoa" class="btn btn-secondary" type="button" onclick= "editarLinha(this)">Editar</button>
+                  <button id="editar_pessoa" class="btn btn-secondary" type="button" data-bs-toggle="modal" value=${editar_ID} onclick="editarLinha(this)">Editar</button>
                   <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" value=${pessoa_ID} onclick="cancelarLinha(this)">Cancelar</button>
               </td>
               
@@ -255,6 +258,91 @@ function cancelarLinha(botao) {
         console.log('Erro ao tentar excluir a pessoa', error);
     });
 }
+
+function editarLinha(botao) {
+    console.log(botao)
+    let username = botao.querySelector('input[name="nome"]').value;
+    let useremail = botao.querySelector('input[name="email"]').value;
+    let tipo = botao.querySelector('input[name="tipo_editar"]:checked').value;
+    const url = document.querySelector('#URL').value;
+    let editar_ID = botao.value;
+    let pessoa_ID = editar_ID 
+
+    const novaPessoa = { username, useremail, tipo, url, editar_ID, pessoa_ID };
+
+        
+
+    let dadosAtualizados = {
+        nome: username,
+        email: useremail,
+        tipo: tipo,
+        editarID: editar_ID,
+        pessoaID: pessoa_ID
+    }
+    
+    fetch(`${url}/pessoa/${editar_ID}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "Aplication/json",
+            "Accept": "Aplication/json"
+        },
+        body: json.stringify(dadosAtualizados)
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error('Erro ao editar linha')
+        }
+        return response.json();
+    })
+    .then(error => {
+        console.error('Error: ', error);
+    })
+ 
+    .then(response => {
+        let editar_ID = response._id;
+        console.log('id do editar => ', editar_ID)
+        pessoasSalvas.push(novaPessoa);
+        idsalvo.push(editar_ID);
+
+        
+    if(tipo === '1') {
+        tipo = 'Cliente';
+    } else if(tipo === '2') {
+        tipo = 'Fornecedor';
+    }else if(tipo === '3') {
+        tipo = 'Empregado';
+    } else {
+        tipo = 'Tipo desconhecido';
+    }
+
+    const tbody = document.querySelectorAll('#tbody')[0];
+
+    const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+              <td>${username}</td>
+              <td>${useremail}</td>
+              <td>${tipo}</td>
+              <td>
+                  <button id="editar_pessoa" class="btn btn-secondary" type="button" data-bs-toggle="modal" value=${editar_ID} onclick="editarLinha(this)">Editar</button>
+                  <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" value=${pessoa_ID} onclick="cancelarLinha(this)">Cancelar</button>
+              </td>
+              
+              `;
+
+            tbody.appendChild(newRow);
+
+    })
+   };
+
+
+
+
+
+
+
+
+
+
 
         
 
