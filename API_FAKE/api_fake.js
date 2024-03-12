@@ -3,9 +3,25 @@ const pessoasSalvas = [{}];
 const idsalvo = [{}];
 
 document.addEventListener('DOMContentLoaded', function () {
+    const inputUrl = document.querySelector('#URL');
+    const tbody = document.querySelector('#tbody');
+
+    function ocultarTbodySeVazio() {
+        if (inputUrl.value.trim() === '') {
+            tbody.style.display = 'none';
+        } else {
+            tbody.style.display = '';
+        }
+    }
+
+    inputUrl.addEventListener('blur', ocultarTbodySeVazio);
+
+    ocultarTbodySeVazio();
+
+
 
     let url = document.querySelector('#URL').value
-    console.log('zuado', url)
+    console.log('url =>', url)
 
     if (url.length > 0) {
 
@@ -78,18 +94,20 @@ document.addEventListener('DOMContentLoaded', function () {
                         `;
 
                     tbody.appendChild(newRow);
-
-
-
-
-
                 }
-
-
-
             })
 
     }
+
+
+
+
+
+
+
+
+
+
 
     let urlUsada = '';
 
@@ -123,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-                        console.log('response do GET =>', response)
+                        console.log('response do segundo GET/BLUR =>', response)
 
                         for (pessoa of response) {
 
@@ -143,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                             idsalvo.push(pessoa_ID)
 
-                            console.log('id do GET => ', pessoa_ID)
+                            console.log('id do GET/BLUR => ', pessoa_ID)
 
                             if (tbody.querySelectorAll('tr').length === 0) {
                                 const headerRow = document.createElement('tr');
@@ -253,7 +271,7 @@ function inserirDados(form) {
             let pessoa_ID = response._id;
             let editar_ID = pessoa_ID;
 
-            console.log('id da pessoa => ', pessoa_ID)
+            console.log('id da pessoa/POST => ', pessoa_ID)
 
             pessoasSalvas.push(novaPessoa);
 
@@ -308,7 +326,6 @@ function inserirDados(form) {
 
             if (tbody.querySelectorAll('tr').length >= 1) {
                 document.getElementById('h5').style.display = 'none';
-                alert('Pessoa adicionada');
                 tbody.style.display = '';
 
             } else {
@@ -316,6 +333,12 @@ function inserirDados(form) {
                 document.getElementById('h5').style.display = 'block';
 
             }
+
+
+            alert('Pessoa adicionada');
+            const modalElement = document.getElementById('pessoa_modal');
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            modalInstance.hide();
 
         });
 }
@@ -331,29 +354,32 @@ function cancelarLinha(botao) {
     const url = document.querySelector('#URL').value;
 
 
-    confirm('Deseja deletar essa pessoa ?')
+    let confirmar = confirm('Deseja deletar essa pessoa ?')
 
-    fetch(`${url}/pessoa/${pessoa_ID}`, {
-        method: "DELETE",
-    })
-        .then(response => {
-            console.log(response.status);
+    if (confirmar == true) {
 
-            alert('Deletado com sucesso XD')
-
-            linha.remove();
-
-            if (tbody.querySelectorAll('tr').length === 1) {
-
-
-                tbody.style.display = 'none';
-
-                document.querySelector('h5').style.display = 'block';
-            }
+        fetch(`${url}/pessoa/${pessoa_ID}`, {
+            method: "DELETE",
         })
-        .catch(error => {
-            console.log('Erro ao tentar excluir a pessoa', error);
-        });
+            .then(response => {
+                console.log(response.status);
+
+                alert('Deletado com sucesso XD')
+
+                linha.remove();
+
+                if (tbody.querySelectorAll('tr').length === 1) {
+
+
+                    tbody.style.display = 'none';
+
+                    document.querySelector('h5').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.log('Erro ao tentar excluir a pessoa', error);
+            });
+    }
 }
 
 function editarLinha(botao) {
@@ -362,43 +388,102 @@ function editarLinha(botao) {
     let useremail = document.querySelector('input[name="email"]').value;
     let tipo = document.querySelector('input[name="tipo"]:checked').value;
     const url = document.querySelector('#URL').value;
-    let editar_ID = botao.value;
+    let valorBotao = botao.value;
 
 
-    const novaPessoa = { username, useremail, tipo, url, editar_ID };
+    const novaPessoa = { username, useremail, tipo, url, valorBotao };
 
-    console.log('ta aqui', novaPessoa)
+    console.log('editar linha =>', novaPessoa)
 
-    // let inputform = document.querySelector('#form_pessoa')
-    //         console.log(inputform)
 
-    let dadosAtualizados = {
-        nome: username,
-        email: useremail,
-        tipo: tipo,
-        editarID: editar_ID,
 
+
+    // let dadosAtualizados = {
+    //     nome: username,
+    //     email: useremail,
+    //     tipo: tipo,
+    //     url: url,
+    //     valor: valorBotao,
+    // }
+
+    const form = document.querySelector('#form_pessoa')
+    form.querySelector('input[name="nome"]').value = username;
+    form.querySelector('input[name="email"]').value = useremail;
+
+    const radio = form.querySelectorAll('input[name="tipo"]');
+    for (const r of radio) {
+        if (r.tipo === '1') {
+            r.tipo = 'Cliente'
+        } else if (r.tipo === '2') {
+            r.tipo = 'Fornecedor'
+        } else if (r.tipo === '3') {
+            r.tipo = 'Empregado'
+        }
     }
 
 
-    fetch(`${url}/pessoa/${editar_ID}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "Aplication/json",
-            "Accept": "Aplication/json"
-        },
-        body: JSON.stringify(dadosAtualizados)
-        })
+    const modal = new bootstrap.Modal(document.getElementById('pessoa_modal'))
+    modal.show()
 
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao editar linha')
-            }
-            return response.json();
-        })
-        .then(response => {
-            
-        })
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // fetch(`${url}/pessoa/${valorBotao}`, {
+    //     method: "PUT",
+    //     headers: {
+    //         "Content-Type": "Aplication/json",
+    //         "Accept": "Aplication/json"
+    //     },
+    //     body: JSON.stringify(dadosAtualizados)
+    // })
+
+    //     .then(response => {
+    //         if (!response.ok) {
+    //             throw new Error('Erro ao editar linha')
+    //         }
+    //         return response.json();
+    //     })
+    //     .then(response => {
+
+    //     })
 
 
 
@@ -444,7 +529,6 @@ function editarLinha(botao) {
 
 
     // })
-};
 
 
 
