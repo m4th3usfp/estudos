@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (nova_pessoa.id === 'nova_pessoa') {
         salvar_pessoa.style.display = 'none';
+        adicionar_pessoa.style.display = ''
     }
 
 
@@ -231,6 +232,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+function aparecerbotao() {
+    const nova_pessoa = document.querySelector('#nova_pessoa')
+    const salvar_pessoa = document.querySelector('#salvar_pessoa')
+    const adicionar_pessoa = document.querySelector('#adicionar_pessoa')
+
+    if (nova_pessoa.id === 'nova_pessoa') {
+        salvar_pessoa.style.display = 'none';
+        adicionar_pessoa.style.display = 'block'
+    }
+
+}
 
 function inserirDados(form) {
 
