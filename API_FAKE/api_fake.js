@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     ocultarTbodySeVazio();
 
+    if (nova_pessoa.id === 'nova_pessoa') {
+        salvar_pessoa.style.display = 'none';
+    }
 
 
     let url = document.querySelector('#URL').value
@@ -244,6 +247,9 @@ function inserirDados(form) {
     if (event.submitter.id === 'cancelar_modal') {
         return;
     }
+    
+    
+    
 
 
 
@@ -322,6 +328,9 @@ function inserirDados(form) {
 
             tbody.appendChild(newRow);
 
+            
+           
+            
 
 
             if (tbody.querySelectorAll('tr').length >= 1) {
@@ -385,7 +394,15 @@ function cancelarLinha(botao) {
 
 function editarLinha(botao) {
     console.log('o botao aqqui =>', botao);
+    const editar_pessoa = document.querySelector('#editar_pessoa')
+    const adicionar_pessoa = document.querySelector('#adicionar_pessoa')
 
+    if (editar_pessoa.id === 'editar_pessoa') {
+        adicionar_pessoa.style.display = 'none';
+        salvar_pessoa.style.display = ''
+    }
+
+    
     const linha = botao.closest('tr');
     let username = linha.querySelector('td:nth-child(1)').textContent;
     let useremail = linha.querySelector('td:nth-child(2)').textContent;
@@ -408,20 +425,9 @@ function editarLinha(botao) {
 
     // Defina a variável 'form' antes de usá-la
     const form = document.querySelector('#form_pessoa');
-    const footer = form.querySelector('#modal-footer')
-    const adicionarpessoa = document.querySelector('#adicionar_pessoa')
+    
 
-    if (botao.id === 'editar_pessoa') {
-        
-         footer.innerHTML = `
-         <button id="cancelar_modal" class="btn btn-secondary float-right" data-bs-dismiss="modal">Cancelar</button>
-         <button id="salvar_pessoa" class="btn btn-primary float-right" type="submit">Salvar</button>
-         `;  
-        
-    } else if (botao.id === 'nova_pessoa') {
-        footer.querySelector('#salvar_pessoa').style.display =  'none';
-        adicionarpessoa.style.display = ''
-    }
+    
      
     
 
