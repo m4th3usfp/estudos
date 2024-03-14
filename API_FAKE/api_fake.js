@@ -328,6 +328,7 @@ function inserirDados(form) {
                 document.getElementById('h5').style.display = 'none';
                 tbody.style.display = '';
 
+
             } else {
 
                 document.getElementById('h5').style.display = 'block';
@@ -383,52 +384,81 @@ function cancelarLinha(botao) {
 }
 
 function editarLinha(botao) {
-    console.log('o botao aqqui =>', botao)
-    let username = document.querySelector('input[name="nome"]').value;
-    let useremail = document.querySelector('input[name="email"]').value;
-    let tipo = document.querySelector('input[name="tipo"]:checked').value;
-    const url = document.querySelector('#URL').value;
+    console.log('o botao aqqui =>', botao);
+
+    const linha = botao.closest('tr');
+    let username = linha.querySelector('td:nth-child(1)').textContent;
+    let useremail = linha.querySelector('td:nth-child(2)').textContent;
+    let tipo = linha.querySelector('td:nth-child(3)').textContent;
+    console.log(tipo);
+
     let valorBotao = botao.value;
+    console.log(valorBotao);
+
+    let radioTipo; // Declare a variável aqui
+
+    // Atribua um valor ao radioTipo com base no tipo
+    if (tipo === 'Cliente') {
+        radioTipo = '1';
+    } else if (tipo === 'Fornecedor') {
+        radioTipo = '2';
+    } else if (tipo === 'Empregado') {
+        radioTipo = '3';
+    }
+
+    // Defina a variável 'form' antes de usá-la
+    const form = document.querySelector('#form_pessoa');
+    const footer = form.querySelector('#modal-footer')
+    const adicionarpessoa = document.querySelector('#adicionar_pessoa')
+
+    if (botao.id === 'editar_pessoa') {
+        
+         footer.innerHTML = `
+         <button id="cancelar_modal" class="btn btn-secondary float-right" data-bs-dismiss="modal">Cancelar</button>
+         <button id="salvar_pessoa" class="btn btn-primary float-right" type="submit">Salvar</button>
+         `;  
+        
+    } else if (botao.id === 'nova_pessoa') {
+        footer.querySelector('#salvar_pessoa').style.display =  'none';
+        adicionarpessoa.style.display = ''
+    }
+     
+    
 
 
-    const novaPessoa = { username, useremail, tipo, url, valorBotao };
 
-    console.log('editar linha =>', novaPessoa)
-
-
-
-
-    // let dadosAtualizados = {
-    //     nome: username,
-    //     email: useremail,
-    //     tipo: tipo,
-    //     url: url,
-    //     valor: valorBotao,
-    // }
-
-    const form = document.querySelector('#form_pessoa')
+    // Preencha os valores nos campos do modal
     form.querySelector('input[name="nome"]').value = username;
     form.querySelector('input[name="email"]').value = useremail;
 
-    const radio = form.querySelectorAll('input[name="tipo"]');
-    for (const r of radio) {
-        if (r.tipo === '1') {
-            r.tipo = 'Cliente'
-        } else if (r.tipo === '2') {
-            r.tipo = 'Fornecedor'
-        } else if (r.tipo === '3') {
-            r.tipo = 'Empregado'
+
+    // Verifique qual botão de opção corresponde ao tipo e marque-o como selecionado
+    const radioTipos = form.querySelectorAll('input[name="tipo"]');
+    for (let i = 0; i < radioTipos.length; i++) {
+        if (radioTipos[i].value === radioTipo) { // Use radioTipo aqui em vez de tipo
+            radioTipos[i].checked = true;
+            break;
         }
     }
 
-
-    const modal = new bootstrap.Modal(document.getElementById('pessoa_modal'))
-    modal.show()
-
+    // Abra o modal
+    const modal1 = new bootstrap.Modal(document.getElementById('pessoa_modal'));
+    modal1.show();
 };
 
 
 
+function editarPessoa(botao) {
+    const url = document.querySelector('#URL').value;
+    const linhadobotao = botao.closest('tr');
+    const nome = linhadobotao.querySelector('input[name="nome"]').value;
+    const email = linhadobotao.querySelector('input[name="email"]').value;
+
+
+
+
+
+}
 
 
 
@@ -464,71 +494,6 @@ function editarLinha(botao) {
 
 
 
-
-
-    // fetch(`${url}/pessoa/${valorBotao}`, {
-    //     method: "PUT",
-    //     headers: {
-    //         "Content-Type": "Aplication/json",
-    //         "Accept": "Aplication/json"
-    //     },
-    //     body: JSON.stringify(dadosAtualizados)
-    // })
-
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error('Erro ao editar linha')
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(response => {
-
-    //     })
-
-
-
-    // .then(response => {
-    //     let editar_ID = response._id;
-
-
-
-    //     console.log('id do editar => ', editar_ID)
-
-
-    //     if (tipo === '1') {
-    //         tipo = 'Cliente';
-    //     } else if (tipo === '2') {
-    //         tipo = 'Fornecedor';
-    //     } else if (tipo === '3') {
-    //         tipo = 'Empregado';
-    //     } else {
-    //         tipo = 'Tipo desconhecido';
-    //     }
-
-
-    //     const tbody = document.querySelectorAll('#tbody')[0];
-
-
-
-    //     const newRow = document.createElement('tr');
-    //     newRow.innerHTML = `
-    //       <td>${username}</td>
-    //       <td>${useremail}</td>
-    //       <td>${tipo}</td>
-    //       <td>
-    //           <button id="editar_pessoa" class="btn btn-secondary" type="button" data-bs-toggle="modal" value=${editar_ID} onclick="editarLinha(this)">Editar</button>
-    //           <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" value=${pessoa_ID} onclick="cancelarLinha(this)">Cancelar</button>
-    //       </td>
-
-    //       `;
-
-    //     tbody.appendChild(newRow);
-
-    //     pessoasSalvas.push(novaPessoa);
-    //     idsalvo.push(editar_ID);
-
-
-    // })
 
 
 
