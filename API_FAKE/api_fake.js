@@ -5,12 +5,16 @@ const idsalvo = [{}];
 document.addEventListener('DOMContentLoaded', function () {
     const inputUrl = document.querySelector('#URL');
     const tbody = document.querySelector('#tbody');
+    let inputusada = inputUrl.value
+
 
     function ocultarTbodySeVazio() {
-        if (inputUrl.value.trim() === '') {
+        if (inputUrl.value.trim() === '' || inputUrl.value.trim() !== inputusada) {             // ja resolvi kkk
             tbody.style.display = 'none';
+            document.querySelector('h5').style.display = ''
         } else {
             tbody.style.display = '';
+            document.querySelector('h5').style.display = 'none';
         }
     }
 
@@ -18,10 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     ocultarTbodySeVazio();
 
-    if (nova_pessoa.id === 'nova_pessoa') {
-        salvar_pessoa.style.display = 'none';
-        adicionar_pessoa.style.display = ''
-    }
 
 
     let url = document.querySelector('#URL').value
@@ -122,13 +122,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if (url.length > 0) {
         return
     }
-    inputurl.addEventListener('blur', function () {
+    inputurl.addEventListener('blur', function () {             // ele ta fazendo varios get sempre que ocorre o blur, fazer isso parar
 
         const URL = inputurl.value;
-        if (urlUsada === '') {
+        if (urlUsada === '' || urlUsada !== url) {
             urlUsada = URL
+            console.log('urlusada', urlUsada)
             console.log('e isso', URL)
-            if (URL.length > 0) {
+            if (URL === urlUsada) {
 
                 fetch(URL + '/pessoa', {
                     method: 'GET',
@@ -199,6 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 `;
 
                             tbody.appendChild(newRow);
+                            tbody.style.display = '';
 
 
 
@@ -239,8 +241,26 @@ function aparecerbotao() {
 
     if (nova_pessoa.id === 'nova_pessoa') {
         salvar_pessoa.style.display = 'none';
-        adicionar_pessoa.style.display = 'block'
+        adicionar_pessoa.style.display = 'block';
+
+        const name = document.querySelector('input[name="nome"]')
+        const Email = document.querySelector('input[name="email"]')
+        let tipo = document.querySelectorAll('input[name="tipo"]')
+        console.log(tipo)
+        
+        name.value = '';
+        Email.value = '';
+        
+        
+        tipo.forEach(input => {
+            input.checked = false;
+        })
+        
     }
+       
+        
+ 
+
 
 }
 
@@ -259,8 +279,8 @@ function inserirDados(form) {
     if (event.submitter.id === 'cancelar_modal') {
         return;
     }
-    
-    
+
+
     
 
 
@@ -280,10 +300,11 @@ function inserirDados(form) {
 
         },
         body: JSON.stringify(novaPessoa)
-    })
+        })
         .then((response) => {
             console.log('response post =>', response)
             return response.json();
+
         })
         .then((response) => {
             let pessoa_ID = response._id;
@@ -340,9 +361,9 @@ function inserirDados(form) {
 
             tbody.appendChild(newRow);
 
-            
-           
-            
+
+
+
 
 
             if (tbody.querySelectorAll('tr').length >= 1) {
@@ -362,7 +383,10 @@ function inserirDados(form) {
             const modalInstance = bootstrap.Modal.getInstance(modalElement);
             modalInstance.hide();
 
+            
+
         });
+        
 }
 
 
@@ -414,7 +438,7 @@ function editarLinha(botao) {
         salvar_pessoa.style.display = ''
     }
 
-    
+
     const linha = botao.closest('tr');
     let username = linha.querySelector('td:nth-child(1)').textContent;
     let useremail = linha.querySelector('td:nth-child(2)').textContent;
@@ -437,11 +461,11 @@ function editarLinha(botao) {
 
     // Defina a variável 'form' antes de usá-la
     const form = document.querySelector('#form_pessoa');
-    
 
-    
-     
-    
+
+
+
+
 
 
 
