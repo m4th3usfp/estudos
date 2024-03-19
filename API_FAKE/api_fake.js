@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    let url = document.querySelector('#URL').value
-    console.log('url =>', url)
+    let url = document.querySelector('#URL').value // recebe a url que foi inserida no input #URL
+    console.log('url linha 27 =>', url)
 
     if (url.length > 0) {
 
@@ -113,82 +113,82 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    let urlUsada = '';
+    let urlUsada = ''; // valor inicial zerado
 
-    let inputurl = document.querySelector('#URL')
+    let inputurl = document.querySelector('#URL') // recebe o proprio input da url
 
 
 
-    if (url.length > 0) {
+    if (url.length > 0) {          // verifica se existe a url no input e retorna 
         return
     }
-    inputurl.addEventListener('blur', function () {             // ele ta fazendo varios get sempre que ocorre o blur, fazer isso parar
+    inputurl.addEventListener('blur', function () {             // adiciona o eventlistener no inputurl que e o proprio input, funções nao funcionam em strings 
 
-        const URL = inputurl.value;
-        if (urlUsada === '' || urlUsada !== url) {
-            urlUsada = URL
+        const URL = inputurl.value;                             // recebe a propria URl do input 
+        if (urlUsada === '' || urlUsada !== URL) {              // verifica se a urlUsada for estritamente vazia ou diferente da url do crud, se sim faz o fetch()
+
             console.log('urlusada', urlUsada)
             console.log('e isso', URL)
-            if (URL === urlUsada) {
 
-                fetch(URL + '/pessoa', {
-                    method: 'GET',
+
+            fetch(URL + '/pessoa', {
+                method: 'GET',
+
+            })
+
+                .then(response => {
+
+                    return response.json()
+
 
                 })
-
-                    .then(response => {
-
-                        return response.json()
-
-
-                    })
-                    .then(response => {
+                .then(response => {
 
 
 
-                        console.log('response do segundo GET/BLUR =>', response)
+                    console.log('response do segundo GET/BLUR =>', response)
 
-                        for (pessoa of response) {
+                    for (pessoa of response) {
 
-                            if (pessoa.tipo === '1') {
-                                pessoa.tipo = 'Cliente';
-                            } else if (pessoa.tipo === '2') {
-                                pessoa.tipo = 'Fornecedor';
-                            } else if (pessoa.tipo === '3') {
-                                pessoa.tipo = 'Empregado';
-                            } else {
-                                pessoa.tipo = 'Tipo desconhecido';
-                            }
+                        if (pessoa.tipo === '1') {
+                            pessoa.tipo = 'Cliente';
+                        } else if (pessoa.tipo === '2') {
+                            pessoa.tipo = 'Fornecedor';
+                        } else if (pessoa.tipo === '3') {
+                            pessoa.tipo = 'Empregado';
+                        } else {
+                            pessoa.tipo = 'Tipo desconhecido';
+                        }
 
-                            const tbody = document.querySelector('#tbody');
-                            let pessoa_ID = pessoa._id;
-                            let editar_ID = pessoa_ID;
+                        const tbody = document.querySelector('#tbody');
+                        let pessoa_ID = pessoa._id;
+                        let editar_ID = pessoa_ID;
 
-                            idsalvo.push(pessoa_ID)
+                        idsalvo.push(pessoa_ID)
 
-                            console.log('id do GET/BLUR => ', pessoa_ID)
+                        console.log('id do GET/BLUR => ', pessoa_ID)
 
-                            if (tbody.querySelectorAll('tr').length === 0) {
-                                const headerRow = document.createElement('tr');
-                                headerRow.innerHTML = `
+                        if (tbody.querySelectorAll('tr').length === 0) {
+                            const headerRow = document.createElement('tr');
+                            headerRow.innerHTML = `
                                     <td>Nome</td>
                                     <td>Email</td>
                                     <td>Tipo</td>
                                     <td></td>
                                     </tr>
                                     `;
-                                tbody.appendChild(headerRow);
+                            tbody.appendChild(headerRow);
 
 
-                            }
+                        }
 
-                            if (tbody.querySelectorAll('tr').length >= 1) {
-                                document.getElementById('h5').style.display = 'none';
-                            }
+                        if (tbody.querySelectorAll('tr').length >= 1) {
+                            document.getElementById('h5').style.display = 'none';
+                        }
 
 
-                            const newRow = document.createElement('tr');
-                            newRow.innerHTML = `
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
                                 <td>${pessoa.nome}</td>
                                 <td>${pessoa.email}</td>
                                 <td>${pessoa.tipo}</td>
@@ -199,27 +199,27 @@ document.addEventListener('DOMContentLoaded', function () {
                                 
                                 `;
 
-                            tbody.appendChild(newRow);
-                            tbody.style.display = '';
+                        tbody.appendChild(newRow);
 
 
 
 
 
-                        }
+                    }
 
 
 
-                    })
+                })
 
 
-            }
+
+
         }
 
 
-
-
-
+        urlUsada = URL
+        tbody.style.display = '';
+        document.getElementById('h5').style.display = 'none';
 
 
     })
@@ -247,19 +247,19 @@ function aparecerbotao() {
         const Email = document.querySelector('input[name="email"]')
         let tipo = document.querySelectorAll('input[name="tipo"]')
         console.log(tipo)
-        
+
         name.value = '';
         Email.value = '';
-        
-        
+
+
         tipo.forEach(input => {
             input.checked = false;
         })
-        
+
     }
-       
-        
- 
+
+
+
 
 
 }
@@ -281,7 +281,7 @@ function inserirDados(form) {
     }
 
 
-    
+
 
 
 
@@ -300,7 +300,7 @@ function inserirDados(form) {
 
         },
         body: JSON.stringify(novaPessoa)
-        })
+    })
         .then((response) => {
             console.log('response post =>', response)
             return response.json();
@@ -383,10 +383,10 @@ function inserirDados(form) {
             const modalInstance = bootstrap.Modal.getInstance(modalElement);
             modalInstance.hide();
 
-            
+
 
         });
-        
+
 }
 
 
