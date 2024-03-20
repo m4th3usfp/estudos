@@ -126,22 +126,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const URL = inputurl.value;                             // recebe a propria URl do input 
         if (urlUsada === '' || urlUsada !== URL) {              // verifica se a urlUsada for estritamente vazia ou diferente da url do crud, se sim faz o fetch()
-
-            console.log('urlusada', urlUsada)
-            console.log('e isso', URL)
+            
+           // console.log('urlusada', urlUsada)
+            console.log('URL =>', URL)
 
 
             fetch(URL + '/pessoa', {
                 method: 'GET',
 
-            })
+                })
 
                 .then(response => {
 
                     return response.json()
 
 
-                })
+                 })
                 .then(response => {
 
 
@@ -200,31 +200,41 @@ document.addEventListener('DOMContentLoaded', function () {
                                 `;
 
                         tbody.appendChild(newRow);
-
-
-
-
-
+                       
+                       
+                        
+                        
+                        
                     }
-
-
-
+                    
+                    
+                    
                 })
-
-
-
-
-        }
-
-
-        urlUsada = URL
-        tbody.style.display = '';
-        document.getElementById('h5').style.display = 'none';
-
-
-    })
-
-
+                
+                
+                
+          
+            }   
+            
+            
+            
+            console.log('urlUsada =>', urlUsada)
+            tbody.style.display = ''
+            document.querySelector('h5').style.display = 'none'
+            console.log('tbody aqui', document.querySelectorAll('#tbody')[0])
+            if (URL === '') {
+                document.querySelector('h5').style.display = 'block'
+                tbody.style.display = 'none'
+            }
+             if (urlUsada !== URL) {
+                tbody.remove()
+                urlUsada = URL
+                tbody.style.display = ''
+            }   
+        
+        })
+        
+        
 
 
 
@@ -367,7 +377,7 @@ function inserirDados(form) {
 
 
             if (tbody.querySelectorAll('tr').length >= 1) {
-                document.getElementById('h5').style.display = 'none';
+                
                 tbody.style.display = '';
 
 
@@ -383,7 +393,7 @@ function inserirDados(form) {
             const modalInstance = bootstrap.Modal.getInstance(modalElement);
             modalInstance.hide();
 
-
+            document.getElementById('h5').style.display = 'none';
 
         });
 
