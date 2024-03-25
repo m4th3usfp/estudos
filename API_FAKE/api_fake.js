@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
             tbody.style.display = '';
             document.querySelector('h5').style.display = 'none';
         }
+        console.log('voltou aqui')
     }
 
     inputUrl.addEventListener('blur', ocultarTbodySeVazio);
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     console.log('id do GET => ', pessoa_ID)
 
-                    if (tbody.querySelectorAll('tr').length === 0) {
+                    if (document.querySelectorAll('tr').length === 0) {
                         const headerRow = document.createElement('tr');
                         headerRow.innerHTML = `
                             <td>Nome</td>
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     }
 
-                    if (tbody.querySelectorAll('tr').length >= 1) {
+                    if (document.querySelectorAll('tr').length >= 1) {
                         document.getElementById('h5').style.display = 'none';
                     }
 
@@ -120,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     if (url.length > 0) {          // verifica se existe a url no input e retorna 
-        return
+        urlUsada = url
     }
     inputurl.addEventListener('blur', function () {             // adiciona o eventlistener no inputurl que e o proprio input, funções nao funcionam em strings 
 
@@ -168,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         console.log('id do GET/BLUR => ', pessoa_ID)
 
-                        if (tbody.querySelectorAll('tr').length === 0) {
+                        if (document.querySelectorAll('tr').length === 0) {
                             const headerRow = document.createElement('tr');
                             headerRow.innerHTML = `
                                     <td>Nome</td>
@@ -182,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         }
 
-                        if (tbody.querySelectorAll('tr').length >= 1) {
+                        if (document.querySelectorAll('tr').length >= 1) {
                             document.getElementById('h5').style.display = 'none';
                         }
 
@@ -221,16 +222,15 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('urlUsada =>', urlUsada)
             tbody.style.display = ''
             document.querySelector('h5').style.display = 'none'
-            console.log('tbody aqui', document.querySelectorAll('#tbody')[0])
             if (URL === '') {
                 document.querySelector('h5').style.display = 'block'
                 tbody.style.display = 'none'
             }
              if (urlUsada !== URL) {
-                tbody.remove()
+                tbody.innerHTML = ''
                 urlUsada = URL
                 tbody.style.display = ''
-            }   
+            }
         
         })
         
@@ -274,25 +274,19 @@ function aparecerbotao() {
 
 }
 
-function inserirDados(form) {
+function inserirDados() {
+
+    // const id = document.querySelector('input[name="id"]').value
+    // console.log('o que eu quero ver =>', id)
+    // if (id) {
+    //     return editarPessoa();
+    // }
 
 
-    const nome = form.querySelector('input[name="nome"]').value;
-    const email = form.querySelector('input[name="email"]').value;
-    let tipo = form.querySelector('input[name="tipo"]:checked').value;
+    const nome = document.querySelector('input[name="nome"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    let tipo = document.querySelector('input[name="tipo"]:checked').value;
     const URL = document.getElementById('URL').value;
-
-
-
-
-
-    if (event.submitter.id === 'cancelar_modal') {
-        return;
-    }
-
-
-
-
 
 
 
@@ -330,7 +324,7 @@ function inserirDados(form) {
             const tbody = document.querySelectorAll('#tbody')[0];
 
             // Criação da linha de cabeçalho
-            if (tbody.querySelectorAll('tr').length === 0) {
+            if (document.querySelectorAll('tr').length === 0) {
                 const headerRow = document.createElement('tr');
                 headerRow.innerHTML = `
                 <td>Nome</td>
@@ -376,7 +370,7 @@ function inserirDados(form) {
 
 
 
-            if (tbody.querySelectorAll('tr').length >= 1) {
+            if (document.querySelectorAll('tr').length >= 1) {
                 
                 tbody.style.display = '';
 
@@ -424,7 +418,7 @@ function cancelarLinha(botao) {
 
                 linha.remove();
 
-                if (tbody.querySelectorAll('tr').length === 1) {
+                if (document.querySelectorAll('tr').length === 1) {
 
 
                     tbody.style.display = 'none';
@@ -442,6 +436,7 @@ function editarLinha(botao) {
     console.log('o botao aqqui =>', botao);
     const editar_pessoa = document.querySelector('#editar_pessoa')
     const adicionar_pessoa = document.querySelector('#adicionar_pessoa')
+    //let salvar_pessoa1 = document.querySelector('#salvar_pessoa')
 
     if (editar_pessoa.id === 'editar_pessoa') {
         adicionar_pessoa.style.display = 'none';
@@ -450,13 +445,17 @@ function editarLinha(botao) {
 
 
     const linha = botao.closest('tr');
+    
     let username = linha.querySelector('td:nth-child(1)').textContent;
     let useremail = linha.querySelector('td:nth-child(2)').textContent;
     let tipo = linha.querySelector('td:nth-child(3)').textContent;
     console.log(tipo);
 
     let valorBotao = botao.value;
-    console.log(valorBotao);
+    const id = document.querySelector('input[name="id"]').textContent = valorBotao
+    console.log('id da função editarlinha => ',id)
+    console.log('valor do botao => ',valorBotao);
+    
 
     let radioTipo; // Declare a variável aqui
 
@@ -482,6 +481,9 @@ function editarLinha(botao) {
     // Preencha os valores nos campos do modal
     form.querySelector('input[name="nome"]').value = username;
     form.querySelector('input[name="email"]').value = useremail;
+    document.querySelector('#salvar_pessoa').value = valorBotao
+    //salvar_pessoa1.setAttribute('value', valorBotao);
+    //console.log('o id do salvar', salvar_pessoa1)
 
 
     // Verifique qual botão de opção corresponde ao tipo e marque-o como selecionado
@@ -499,18 +501,44 @@ function editarLinha(botao) {
 };
 
 
-
 function editarPessoa(botao) {
+    
+    let name = document.querySelector('input[name="nome"]').value;
+    let email = document.querySelector('input[name="email"]').value;
+    let tipo = document.querySelector('input[name="tipo"]:checked').value;
     const url = document.querySelector('#URL').value;
-    const linhadobotao = botao.closest('tr');
-    const nome = linhadobotao.querySelector('input[name="nome"]').value;
-    const email = linhadobotao.querySelector('input[name="email"]').value;
+    let _id = botao.value
+    console.log(botao)
 
+    const informaçãoSalva = { name, email, tipo, _id };
+    
+    console.log('olhar informação', informaçãoSalva);
 
-
-
-
+    // fetch(`${url}/pessoa/${_id}`, {
+    
+    //     method: "PUT",
+    //   mode: "no-cors", // Isso pode ser removido ou alterado para "cors" se o servidor suportar CORS
+    //     headers: {
+    //         "Content-Type": "application/json", // Corrigido aqui
+    //         "Accept": "application/json"
+    //     },
+    //     body: JSON.stringify(informaçãoSalva)
+    // })
+    // .then(response => {
+    //     response.json()})
+    
+    // .then(data => {
+        
+    //     console.log('Resposta da requisição:', data);
+    //     return data; // Retornar os dados obtidos da resposta da requisição
+    // })
+    // .catch(error => {
+    //     console.error('Erro na requisição:', error);
+    // });
 }
+    
+
+
 
 
 
