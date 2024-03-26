@@ -446,7 +446,7 @@ function editarLinha(botao) {
 
     const linha = botao.closest('tr');
     
-    let username = linha.querySelector('td:nth-child(1)').textContent;
+    let nome = linha.querySelector('td:nth-child(1)').textContent;
     let useremail = linha.querySelector('td:nth-child(2)').textContent;
     let tipo = linha.querySelector('td:nth-child(3)').textContent;
     console.log(tipo);
@@ -471,15 +471,8 @@ function editarLinha(botao) {
     // Defina a variável 'form' antes de usá-la
     const form = document.querySelector('#form_pessoa');
 
-
-
-
-
-
-
-
     // Preencha os valores nos campos do modal
-    form.querySelector('input[name="nome"]').value = username;
+    form.querySelector('input[name="nome"]').value = nome;
     form.querySelector('input[name="email"]').value = useremail;
     document.querySelector('#salvar_pessoa').value = valorBotao
     //salvar_pessoa1.setAttribute('value', valorBotao);
@@ -502,40 +495,65 @@ function editarLinha(botao) {
 
 
 function editarPessoa(botao) {
-    
-    let name = document.querySelector('input[name="nome"]').value;
+    let nome = document.querySelector('input[name="nome"]').value;
+    console.log('name aqui =>', nome)
     let email = document.querySelector('input[name="email"]').value;
     let tipo = document.querySelector('input[name="tipo"]:checked').value;
     const url = document.querySelector('#URL').value;
-    let _id = botao.value
-    console.log(botao)
+    let _id = botao.value;
 
-    const informaçãoSalva = { name, email, tipo, _id };
-    
-    console.log('olhar informação', informaçãoSalva);
+    const informaçãoSalva = { nome, email, tipo };
 
-    // fetch(`${url}/pessoa/${_id}`, {
-    
-    //     method: "PUT",
-    //   mode: "no-cors", // Isso pode ser removido ou alterado para "cors" se o servidor suportar CORS
-    //     headers: {
-    //         "Content-Type": "application/json", // Corrigido aqui
-    //         "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify(informaçãoSalva)
-    // })
-    // .then(response => {
-    //     response.json()})
-    
-    // .then(data => {
+    console.log('Informação a ser enviada:', informaçãoSalva);
+
+    fetch(`${url}/pessoa/${_id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(informaçãoSalva)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao editar pessoa');
+        }
         
-    //     console.log('Resposta da requisição:', data);
-    //     return data; // Retornar os dados obtidos da resposta da requisição
-    // })
-    // .catch(error => {
-    //     console.error('Erro na requisição:', error);
-    // });
+        console.log('consolelog da response 1° then', response)
+        alert('Pessoa editada com sucesso');
+        if (tipo === '1') {
+            tipo = 'Cliente';
+        } else if (tipo === '2') {
+            tipo = 'Fornecedor';
+        } else if (tipo === '3') {
+            tipo = 'Empregado';
+        } else {
+            tipo = 'Tipo desconhecido';
+        }
+        const modal = document.querySelector('#pessoa_modal'); // Substitua 'seuModalID' pelo ID real do seu modal
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.hide();
+        const botaotr = document.querySelector('#editar_pessoa')
+        console.log(botaotr.closest('tr'))
+        botaotr.closest('tr').innerHTML = `
+        <td>${nome}</td>
+        <td>${email}</td>
+        <td>${tipo}</td>
+        <td>
+            <button id="editar_pessoa" class="btn btn-secondary" type="button" data-bs-toggle="modal" value=${_id} onclick="editarLinha(this)">Editar</button>
+            <button id="cancelar_linha" class="btn btn-danger" type="button" data-bs-dismiss="modal" value=${_id} onclick="cancelarLinha(this)">Cancelar</button>
+        </td>
+        `;
+        
+        
+    })
+    .catch(error => {
+        console.error('Erro na requisição:', error);
+        // Trate o erro aqui, se necessário
+        alert('Erro ao editar pessoa');
+    });
 }
+
     
 
 
