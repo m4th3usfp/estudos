@@ -533,7 +533,7 @@ function editarPessoa(botao) {
         const modal = document.querySelector('#pessoa_modal'); // Substitua 'seuModalID' pelo ID real do seu modal
         const modalInstance = bootstrap.Modal.getInstance(modal);
         modalInstance.hide();
-        const botaotr = document.querySelector('#editar_pessoa')
+        const botaotr = document.querySelector(`button[value="${_id}"]`)
         console.log(botaotr.closest('tr'))
         botaotr.closest('tr').innerHTML = `
         <td>${nome}</td>
