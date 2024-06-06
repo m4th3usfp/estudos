@@ -85,28 +85,31 @@
 //     document.body.innerHTML = gerarFormulário(dadosPessoais);   
 // };
 
+const readline = require('readline');
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-let vetor1 = ['matheus', 'rodrigo', 'gacilia', 'anusca', 'rene', 'gatos'];
+function buildArray(N) {
+  const array = [];
+  for (let i = 0; i < N; i++) {
+    const row = [];
+    for (let j = 0; j < N; j++) {
+      row.push(Math.abs(i - j) + 1);
+    }
+    array.push(row);
+  }
+  return array;
+}
 
-let b = vetor1.slice(2, 4) //o slice() ele pega uma parte do array como se fosse uma fatia 
-// e adiciona em um novo vetor que ele mesmo cria, sem mudar o array origial;
-// detahle o segundo argumento do slice() ele conta ate o indice anterior que foi indicado, EX: slice(2, 4) vai pegar ate o indice 3
-
-console.log('esse é o slice() => ',vetor1, b)
-
-
-let vetor = ['matheus', 'rodrigo', 'gacilia', 'anusca', 'rene', 'gatos'];
-
-let a = vetor.splice(2, 4) // o splice() arranca um pedaço do array original alterando-o
-// detalhe o segundo argumento do splice(), ele ja trata como o indice '1' e continua a contar a partir dele; 
-
-console.log('esse é o splice() => ', vetor, a)
-
-
-
-
-
-
-
-
+rl.on('line', (input) => {
+  const N = parseInt(input);
+  if (N === 0) {
+    rl.close();
+  } else {
+    const result = buildArray(N);
+    result.forEach(row => console.log(row.join(' ')));
+  }
+});

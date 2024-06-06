@@ -85,28 +85,25 @@
 //     document.body.innerHTML = gerarFormulário(dadosPessoais);   
 // };
 
+var input = require('fs').readFileSync(0, 'utf8');
+var lines = input.split('\n');
 
+let ordem = lines.shift();
+let linha = [];
+let matriz = [];
 
-let vetor1 = ['matheus', 'rodrigo', 'gacilia', 'anusca', 'rene', 'gatos'];
-
-let b = vetor1.slice(2, 4) //o slice() ele pega uma parte do array como se fosse uma fatia 
-// e adiciona em um novo vetor que ele mesmo cria, sem mudar o array origial;
-// detahle o segundo argumento do slice() ele conta ate o indice anterior que foi indicado, EX: slice(2, 4) vai pegar ate o indice 3
-
-console.log('esse é o slice() => ',vetor1, b)
-
-
-let vetor = ['matheus', 'rodrigo', 'gacilia', 'anusca', 'rene', 'gatos'];
-
-let a = vetor.splice(2, 4) // o splice() arranca um pedaço do array original alterando-o
-// detalhe o segundo argumento do splice(), ele ja trata como o indice '1' e continua a contar a partir dele; 
-
-console.log('esse é o splice() => ', vetor, a)
-
-
-
-
-
-
-
-
+while(ordem) {
+    let fim = ordem - 1;
+    for (let i = 0; i < ordem; i++) {
+        for (let j = 0; j < ordem; j++) {
+            if (j == ordem - 1) {
+                linha.push(2);
+            } else if (i==3) {
+                linha.push(1);
+            } else {
+                linha.push(3)
+            }
+        }
+        matriz.push(linha.join(""))
+    }
+}
