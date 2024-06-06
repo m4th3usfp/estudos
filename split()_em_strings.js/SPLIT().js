@@ -14,6 +14,11 @@ function getnameadextensionsfromfile(arquivo) {
     
     function GetUsernameandDomainfromEmail(email) {
         let res = email.split('@');
+        if (res.length > 2) {
+            console.error('deu ruim')
+        } else {
+            console.log('deu')
+        }
         return {
             username: res[0],
             Domain: res[1]

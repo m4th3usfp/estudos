@@ -290,7 +290,7 @@ function inserirDados() {
 
 
 
-    const novaPessoa = { nome, email, tipo, URL };
+    const novaPessoa = { nome, email, tipo };
 
     const url = document.querySelector('#URL').value
     fetch(url + '/pessoa', {

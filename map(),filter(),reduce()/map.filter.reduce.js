@@ -87,17 +87,17 @@ const products = [{
     price: 300
 }];
 
-const discount = Object.keys(products).map(key => products[key]['price'] *= 0.9);
-console.log(discount);
+const discount = Object.keys(products).map(key => products[key]['price'] *= 0.9); // esse .map() altera o array original. Ele não faz uma copia do array, para altera-la  
+console.log('desconto1', discount);                                               // const products se transformou em [90, 135, 270] por causa do *= 0.9 do const discount acima  
 
-const discount2 = Object.keys(products).map(key => products[key]['prices']).filter(price => price > 100);
-console.log(discount2);
+const discount2 = Object.keys(products).map(key => products[key]['price']).filter(price => price >= 100); // 
+console.log('desconto2', discount2);
 
 // Exemplo usando o metodo filter();
 const users = [1,2,3,4,5].filter(user => user !== 2 && user !== 3 && user !== 4);
 console.log(users);
                                         //ou
-const user1 = [1,2,3,4,5,6,7,8,9].filter(user => ![2,3,4].includes(user));
+const user1 = [1,2,3,4,5,6,7,8,9].filter(user => ![2,3,4].includes(user)); // 'user' percorre por todos os indices do array 
 console.log(user1);
 
 
@@ -106,7 +106,7 @@ const annualBilling = [1500, 1800, 700, 5000, 1600, 18000].reduce((total, curren
     return total + currentvalue;
 },0);
 
-console.log(annualBilling);
+console.log('annual billing', annualBilling);
 
 
 // exemplo usando todos os metodos (map(), filter(), reduce());
@@ -139,7 +139,7 @@ console.log(annualBilling);
       
       }).map(item => {
         
-        return item.salary *= 1.5;
+        return item.salary *= 1.5; // esse .map() vai resultar em 5550 e manter o valor 5550, por que o .map() altera o array original sem fazer uma copia como rascunho. 
       
       }).reduce((total, currentValue) => {
       
@@ -150,13 +150,11 @@ console.log(annualBilling);
       //forma simplificada;
       const TotalSalary = employees
     .filter(employee => (employee.department === 'Financeiro'))
-    .map(item => item.salary *= 1.5)
-    .reduce((total, currentValue) => total + currentValue);
+    .map(item => item.salary *= 1.5) // ja esse .map() ira aplicar *= 1.5 em 5550 do resultado anterior e nao do array la em cima, pois seus valores ja sofreram alteração no 1° .map() 
+    .reduce((total, currentValue) => total + currentValue);               // resultando em 8325   
       
-    console.log(TotalSalary);
+    console.log('const employees', TotalSalary);
       
-
-
 
        
        
