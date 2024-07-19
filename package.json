@@ -1,4 +1,20 @@
 {
+  "name": "estudos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.45.2",
+    "playwright": "^1.45.2"
+  },
+  "scripts": {
+    "test": "npx playwright test",
+    "playwright": "node ./pasta_teste/playwright.spec.js"
+  },
+  "keywords": [],
+  "author": "Matheus",
+  "license": "ISC",
+  "description": "testar o playwright",
   "dependencies": {
     "bootstrap": "^5.3.2"
   }
